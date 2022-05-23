@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
-php tests/JsonlDatabaseTest.php && echo "JsonlDatabaseTest passed" || echo "JsonlDatabaseTest failed"
-
-[[ -f "database/test-address-book.jsonl" ]] && rm "database/test-address-book.jsonl"
+for phpFile in tests/*Test.php
+do
+	fileBaseName="$(basename "${phpFile}")"
+	fileBaseNameWithoutExtension="${fileBaseName%.*}"
+	php "${phpFile}" && echo "${fileBaseNameWithoutExtension} passed" || echo "${fileBaseNameWithoutExtension} failed"
+  [[ -f "database/test-address-book.jsonl" ]] && rm "database/test-address-book.jsonl"
+done

@@ -29,6 +29,7 @@ class JsonlDatabase
         $lines = explode(PHP_EOL, $contents);
         $objects = [];
         foreach ($lines as $line) {
+            if (empty($line)) continue;
             try {
                 $objects[] = json_decode($line, true);
             } catch (\Exception $e) {}
