@@ -4,7 +4,7 @@ require_once __DIR__.'/../src/autoload.php';
 
 use CodingChallenge\JsonlDatabase;
 
-$db = new JsonlDatabase("test-addressbook");
+$db = new JsonlDatabase("test-address-book");
 
 // DB löschen
 $db->writeObjects([]);
