@@ -5,7 +5,7 @@ require_once __DIR__.'/../src/autoload.php';
 use CodingChallenge\JsonlDatabase;
 use CodingChallenge\Models\Contact;
 
-$db = new JsonlDatabase("test-address-book");
+$db = new JsonlDatabase("test-contacts");
 
 $arrayOfArrays = [
     ['name' => 'Test Hattingen', 'phone' => '+49 123456789', 'city' => 'Hattingen'],

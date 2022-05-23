@@ -5,5 +5,5 @@ do
 	fileBaseName="$(basename "${phpFile}")"
 	fileBaseNameWithoutExtension="${fileBaseName%.*}"
 	php "${phpFile}" && echo "${fileBaseNameWithoutExtension} passed" || echo "${fileBaseNameWithoutExtension} failed"
-  [[ -f "database/test-address-book.jsonl" ]] && rm "database/test-address-book.jsonl"
+  [[ -f "database/test-contacts.jsonl" ]] && rm "database/test-contacts.jsonl"
 done

@@ -15,7 +15,8 @@
             text-align: center;
         }
         nav {
-            width: 100%;
+            width: 80%;
+            margin: 0 auto 25px auto;
             display: flex;
             justify-content: space-evenly;
             align-items: center;
@@ -23,6 +24,8 @@
         }
         nav > a {
             padding: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
             background-color: greenyellow;
             color: #333;
             text-decoration: none;
@@ -30,11 +33,32 @@
         nav > a:hover {
             text-decoration: underline;
         }
-
         main {
-            width: 100%;
+            width: 80%;
+            margin: 0 auto;
             display: flex;
-            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        main a {
+            text-decoration: none;
+            color: #598318;
+            padding: 3px 5px;
+        }
+        main a:hover {
+            text-decoration: underline;
+        }
+        table tr:nth-child(2n) {
+            background-color: rgba(173, 255, 47, 0.3);
+        }
+        .mt-1 {
+            margin-top: .5rem;
+        }
+        .full-width {
+            width: 100%;
+        }
+        .bg-white {
+            background-color: white!important;
         }
     </style>
 </head>

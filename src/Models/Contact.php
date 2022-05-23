@@ -2,21 +2,22 @@
 
 namespace CodingChallenge\Models;
 
-use CodingChallenge\Models\Model as Model;
-
 class Contact extends Model
 {
     protected array $fields = [
         'name' => [
             'attributes' => [],
+            'name' => 'Name',
             'value' => null,
         ],
         'phone' => [
             'attributes' => [],
+            'name' => 'Phone Number',
             'value' => null,
         ],
         'city' => [
             'attributes' => [],
+            'name' => 'City',
             'value' => null,
         ],
     ];

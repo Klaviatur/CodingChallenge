@@ -4,14 +4,19 @@ namespace CodingChallenge\Models;
 
 class Model
 {
-    protected array $fields = [];
+    protected array $fields;
 
-    public function __construct(array $attributes)
+    public function __construct(array $attributes = [])
     {
         foreach ($attributes as $key => $value) {
             if (array_key_exists($key, $this->fields))
                 $this->fields[$key]['value'] = $value;
         }
+    }
+
+    public function getFields(): array
+    {
+        return $this->fields;
     }
 
     public function toArray(): array

@@ -3,6 +3,7 @@
 require_once __DIR__.'/../src/autoload.php';
 
 use CodingChallenge\JsonlDatabase;
+use CodingChallenge\Models\Contact;
 use CodingChallenge\Request;
 
 // DEBUGGING
@@ -13,44 +14,73 @@ error_reporting(E_ALL);
 $db = new JsonlDatabase("contacts");
 $request = new Request();
 
-
-render('layout/top');
-
-// Zeige Objekt
-if ($request->method() === 'get' && $request->input('action') === 'show') {
-    $contacts = $db->readObjects();
-    render('address-book/index', ['contacts' => $contacts]);
+// Show a single Contact
+if (
+    $request->method === 'get' &&
+    $request->input('action') === 'show'
+) {
+    $id = intval($request->input('id'));
+    $contact = new Contact($db->readObject($id));
+    render('contacts/show', ['id' => $id, 'contact' => $contact]);
 }
 
-// Formular zum Hinzufügen eines Objekts
-if ($request->method() === 'get' && $request->input('action') === 'create') {
-
+// Show form to create a Contact
+elseif (
+    $request->method === 'get' &&
+    $request->input('action') === 'create'
+) {
+    render('contacts/create');
 }
 
-// Ein Objekt hinzufügen
-if ($request->method() === 'post' && $request->input('action') === 'create') {
-
+// Store a new Contact
+elseif (
+    $request->method === 'post' &&
+    $request->input('action') === 'store'
+) {
+    $contact = [];
+    foreach ((new Contact())->getFields() as $fieldKey => $field)
+        $contact[$fieldKey] = $request->input($fieldKey);
+    $db->appendObject($contact);
+    header('Location: /');
 }
 
-// Formular zum Editieren eines Objekts
-if ($request->method() === 'get' && $request->input('action') === 'update') {
-
+// Form for editing a Contact
+elseif (
+    $request->method === 'get' &&
+    $request->input('action') === 'edit'
+) {
+    $id = intval($request->input('id'));
+    $contact = new Contact($db->readObject($id));
+    render('contacts/edit', ['id' => $id, 'contact' => $contact]);
 }
 
-// Ein Objekt updaten
-if ($request->method() === 'post' && $request->input('action') === 'update') {
-
+// Update a contact
+elseif (
+    $request->method === 'post' &&
+    $request->input('action') === 'update'
+) {
+    $id = intval($request->input('id'));
+    $contact = [];
+    foreach ((new Contact())->getFields() as $fieldKey => $field)
+        $contact[$fieldKey] = $request->input($fieldKey);
+    $db->updateObject($id, $contact);
+    header('Location: /');
 }
 
-// Lösche Objekt
-if ($request->method() === 'post' && $request->input('action') === 'delete') {
-
+// Delete a Contact
+elseif (
+    $request->method === 'get' &&
+    $request->input('action') === 'delete'
+) {
+    $id = intval($request->input('id'));
+    $db->deleteObject($id);
+    header('Location: /');
 }
 
-// Zeige Index
-if ($request->input('action') === 'index' || $request->input('action') === null) {
-    $objects = $db->readObjects();
-    render('address-book/index', ['contacts' => $objects]);
+// Show listing of all Contacts
+else {
+    $contacts = [];
+    foreach ($db->readObjects() as $contact)
+        $contacts[] = new Contact($contact);
+    render('contacts/index', ['contacts' => $contacts]);
 }
-
-render('layout/bottom');

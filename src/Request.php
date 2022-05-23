@@ -8,18 +8,13 @@ namespace CodingChallenge;
 
 class Request
 {
+    public readonly string $method;
+
     public function __construct()
     {
-
-    }
-
-    public function method(): ?string
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
-            return 'post';
-        if ($_SERVER['REQUEST_METHOD'] === 'GET')
-            return 'get';
-        return null;
+        $this->method = $_SERVER['REQUEST_METHOD'] === 'POST'
+            ? 'post'
+            : 'get';
     }
 
     public function input(string $key): ?string

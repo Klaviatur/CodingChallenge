@@ -40,5 +40,8 @@ function render($template, $vars = []): void
     if (!file_exists($templatePath))
         throw new \Exception('Template file does not exist!');
     extract($vars);
+
+    require_once __DIR__.'/../views/layout/top.php';
     require_once $templatePath;
+    require_once __DIR__.'/../views/layout/bottom.php';
 }

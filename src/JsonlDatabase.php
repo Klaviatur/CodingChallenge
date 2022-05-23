@@ -81,6 +81,21 @@ class JsonlDatabase
     }
 
     /**
+     * @param int $index
+     * @param $object
+     * @return bool
+     */
+    public function updateObject(int $index, array $object): bool
+    {
+        $objects = $this->readObjects();
+        if (!array_key_exists($index, $objects))
+            return false;
+        $objects[$index] = $object;
+        $this->writeObjects($objects);
+        return true;
+    }
+
+    /**
      * @param array $object
      * @return void
      */
