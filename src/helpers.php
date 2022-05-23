@@ -33,3 +33,12 @@ function dd(...$vars) {
     dump(...$vars);
     exit(1);
 }
+
+function render($template, $vars = []): void
+{
+    $templatePath = __DIR__."/../views/".$template.".php";
+    if (!file_exists($templatePath))
+        throw new \Exception('Template file does not exist!');
+    extract($vars);
+    require_once $templatePath;
+}
