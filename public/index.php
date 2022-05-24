@@ -80,7 +80,13 @@ elseif (
 // Show listing of all Contacts
 else {
     $contacts = [];
-    foreach ($db->readObjects() as $contact)
+    $sortBy = $request->input('sortBy');
+    $sortDirection = $request->input('sortDirection');
+    foreach ($db->readObjects($sortBy, $sortDirection) as $contact)
         $contacts[] = new Contact($contact);
-    render('contacts/index', ['contacts' => $contacts]);
+    render('contacts/index', [
+        'contacts' => $contacts,
+        'sortBy' => $sortBy,
+        'sortDirection' => $sortDirection
+    ]);
 }

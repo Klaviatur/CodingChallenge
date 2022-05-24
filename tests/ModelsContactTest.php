@@ -8,9 +8,9 @@ use CodingChallenge\Models\Contact;
 $db = new JsonlDatabase("test-contacts");
 
 $arrayOfArrays = [
-    ['name' => 'Test Hattingen', 'phone' => '+49 123456789', 'city' => 'Hattingen'],
-    ['name' => 'Test Bochum', 'phone' => '+49 987654321', 'city' => 'Bochum'],
-    ['name' => 'Test Hagen', 'phone' => '+49 123456789', 'city' => 'Hagen'],
+    ['index' => 0, 'name' => 'Test Hattingen', 'phone' => '+49 123456789', 'city' => 'Hattingen'],
+    ['index' => 1, 'name' => 'Test Bochum', 'phone' => '+49 987654321', 'city' => 'Bochum'],
+    ['index' => 2, 'name' => 'Test Hagen', 'phone' => '+49 123456789', 'city' => 'Hagen'],
 ];
 
 $db->writeObjects($arrayOfArrays);

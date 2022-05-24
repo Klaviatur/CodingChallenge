@@ -1,10 +1,4 @@
-<?php
-
-// SHOW
-
-?>
-
-<table class="full-width" style="max-width: 500px">
+<table class="full-width" style="max-width: 500px; margin: 0 auto;">
 
     <tbody>
     <?php foreach ($contact->getFields() as $field): ?>
@@ -17,7 +11,7 @@
 
 </table>
 
-<div>
+<div class="mt-1" style="text-align: center">
     <a href="?action=edit&id=<?php echo $id; ?>">Edit</a>
     <a href="?action=delete&id=<?php echo $id; ?>">Delete</a>
 </div>

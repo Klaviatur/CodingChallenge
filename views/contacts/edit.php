@@ -1,19 +1,13 @@
-<?php
-
-use CodingChallenge\Models\Contact;
-
-?>
-
 <form action="?action=update" method="POST">
 
     <input
             id="id"
             name="id"
             type="hidden"
-            value="<?php echo $id; ?>"
+            value="<?php echo $contact->getIndex(); ?>"
     />
 
-    <table class="full-width" style="max-width: 500px">
+    <table class="full-width" style="max-width: 500px; margin: 0 auto">
 
         <tbody>
         <?php foreach ($contact->getFields() as $fieldKey => $field): ?>

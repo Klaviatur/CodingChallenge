@@ -2,8 +2,12 @@
 
 namespace CodingChallenge;
 
+use CodingChallenge\Models\Contact;
+
 /**
- * Dateiformat jsonl implementiert um Daten ohne Datenbank zu persistieren.
+ * Implementation of jsonl to persist data in a single file.
+ * Every database access (even reading a single Object by ID) implies a full read of the database file. This is intended
+ * since it meets the requirements.
  *
  * @link https://jsonlines.org/
  */
@@ -21,19 +25,36 @@ class JsonlDatabase
     }
 
     /**
+     * Full read on database with sorting capabilities.
+     *
+     * @param string|null $sortBy
+     * @param string|null $sortDirection
      * @return array
      */
-    public function readObjects(): array
+    public function readObjects(?string $sortBy = 'index', ?string $sortDirection = 'asc'): array
     {
         $contents = file_get_contents($this->jsonlFile);
         $lines = explode(PHP_EOL, $contents);
         $objects = [];
-        foreach ($lines as $line) {
-            if (empty($line)) continue;
+        foreach ($lines as $index => $line) {
+            if (empty(trim($line))) continue;
             try {
-                $objects[] = json_decode($line, true);
+                $object = json_decode($line, true);
+                $object['index'] = $index;
+                $objects[] = (new Contact($object))->toArray();
             } catch (\Exception $e) {}
         }
+
+        // Sorting in memory since we use a simple database abstraction
+        if (array_key_exists($sortBy, (new Contact())->getFields())) {
+            $array = array_column($objects, $sortBy);
+            array_multisort(
+                $array,
+                $sortDirection === 'desc' ? SORT_DESC : SORT_ASC,
+                $objects
+            );
+        }
+
         return $objects;
     }
 
@@ -75,6 +96,7 @@ class JsonlDatabase
             if ($object === null)
                 continue;
             try {
+                unset($object['index']);
                 file_put_contents($this->jsonlFile, json_encode($object).PHP_EOL, FILE_APPEND);
             } catch (\Exception $e) {}
         }
@@ -82,7 +104,7 @@ class JsonlDatabase
 
     /**
      * @param int $index
-     * @param $object
+     * @param array $object
      * @return bool
      */
     public function updateObject(int $index, array $object): bool

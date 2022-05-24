@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en_US">
 <head>
     <meta charset="utf-8"/>
     <title>Coding Challenge: Address Book</title>
@@ -10,6 +10,7 @@
             margin: 0;
             padding: 0;
             font-family: monospace;
+            font-size: 0.9rem;
         }
         h1 {
             text-align: center;
@@ -26,8 +27,8 @@
             padding: 15px;
             font-weight: bold;
             text-transform: uppercase;
-            background-color: greenyellow;
-            color: #333;
+            background-color: rgba(89, 131, 24, 0.76);
+            color: #fff;
             text-decoration: none;
         }
         nav > a:hover {
@@ -36,9 +37,6 @@
         main {
             width: 80%;
             margin: 0 auto;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
         }
         main a {
             text-decoration: none;
@@ -48,9 +46,30 @@
         main a:hover {
             text-decoration: underline;
         }
+        table {
+            border-spacing: 0;
+        }
         table tr:nth-child(2n) {
             background-color: rgba(173, 255, 47, 0.3);
         }
+
+        .sort {
+            color: #333333;
+        }
+        .sort.desc, .sort.asc {
+            color: #598318;
+        }
+        .sort.desc::after {
+            content: '▲';
+            position: absolute;
+            margin-left: .2rem;
+        }
+        .sort.asc::after  {
+            content: '▼';
+            position: absolute;
+            margin-left: .2rem;
+        }
+
         .mt-1 {
             margin-top: .5rem;
         }

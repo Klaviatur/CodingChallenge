@@ -11,20 +11,20 @@ $db->writeObjects([]);
 
 // ersten Eintrag schreiben
 $db->appendObject(
-    ['zeile' => 'asdf'],
+    ['name' => 'asdf'],
 );
 
 // TEST: Eintrag muss gefunden werden
-if ($db->readObject(0)['zeile'] !== 'asdf')
+if ($db->readObject(0)['name'] !== 'asdf')
     exit(1);
 
 // ersten, zweiten und dritten Eintrag schreiben
 $db->writeObjects([
-    ['zeile' => '1'],
-    ['zeile' => '2'],
+    ['name' => '1'],
+    ['name' => '2'],
 ]);
 $db->appendObject(
-    ['zeile' => 3],
+    ['name' => 3],
 );
 
 // zweiten Eintrag löschen
@@ -33,8 +33,8 @@ $db->deleteObject(1);
 // TEST: Noch zwei Einträge müssen übrig sein
 $objects = $db->readObjects();
 if (
-    array_key_exists(0, $objects) && $objects[0]['zeile'] === '1' &&
-    array_key_exists(1, $objects) && $objects[1]['zeile'] === 3
+    array_key_exists(0, $objects) && $objects[0]['name'] === '1' &&
+    array_key_exists(1, $objects) && $objects[1]['name'] === 3
 ) {
     // test passed
 } else {

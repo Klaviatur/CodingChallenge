@@ -16,7 +16,17 @@ class Model
 
     public function getFields(): array
     {
-        return $this->fields;
+        $fields = [];
+        foreach ($this->fields as $fieldKey => $field) {
+            if ($fieldKey === 'index') continue;
+            $fields[$fieldKey] = $field;
+        }
+        return $fields;
+    }
+
+    public function getIndex(): int
+    {
+        return $this->fields['index']['value'];
     }
 
     public function toArray(): array
@@ -25,10 +35,5 @@ class Model
         foreach ($this->fields as $key => $field)
             $array[$key] = $field['value'];
         return $array;
-    }
-
-    public function toJson($flags = JSON_PRETTY_PRINT): string
-    {
-        return json_encode($this->toArray(), $flags);
     }
 }

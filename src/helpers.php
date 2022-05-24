@@ -1,40 +1,46 @@
 <?php
 
 /**
- * Pfad zur JSONL Datenbankdatei
+ * Absolute path to the JSONL database file.
  *
  * @link https://jsonlines.org/
  * @param $filename
  * @return string
  */
-function db_path($filename) {
+function db_path(string $filename): string
+{
     return __DIR__.'/../database/'.$filename.".jsonl";
 }
 
 /**
- * Gibt alle übergebenen Variablen aus.
- *
- * @param ...$vars
+ * @param mixed ...$vars
  * @return void
  */
-function dump(...$vars) {
+function dump(mixed ...$vars): void
+{
     echo "<pre>";
-    print_r(...$vars);
+    foreach ($vars as $var)
+        print_r($var);
     echo "</pre>";
 }
 
 /**
- * Gibt alle übergebenen Variablen aus und bricht den Prozess mit Status Code 1 ab.
- *
- * @param ...$vars
+ * @param mixed ...$vars
  * @return void
  */
-function dd(...$vars) {
+function dd(mixed ...$vars): void
+{
     dump(...$vars);
     exit(1);
 }
 
-function render($template, $vars = []): void
+/**
+ * @param string $template
+ * @param array $vars
+ * @return void
+ * @throws Exception
+ */
+function render(string $template, array $vars = []): void
 {
     $templatePath = __DIR__."/../views/".$template.".php";
     if (!file_exists($templatePath))
@@ -44,4 +50,18 @@ function render($template, $vars = []): void
     require_once __DIR__.'/../views/layout/top.php';
     require_once $templatePath;
     require_once __DIR__.'/../views/layout/bottom.php';
+}
+
+/**
+ * @param string|null $string
+ * @param int $maxLength
+ * @return string
+ */
+function limitString(?string $string, int $maxLength = 16): string
+{
+    $string = $string ?? '';
+    $separator = '...';
+    if (strlen($string) > $maxLength)
+        return substr($string, 0, $maxLength - strlen($separator)).$separator;
+    return $string;
 }

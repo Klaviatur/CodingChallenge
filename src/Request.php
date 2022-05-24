@@ -2,10 +2,6 @@
 
 namespace CodingChallenge;
 
-/**
- *
- */
-
 class Request
 {
     public readonly string $method;
@@ -20,9 +16,9 @@ class Request
     public function input(string $key): ?string
     {
         if (array_key_exists($key, $_GET))
-            return $_GET[$key];
+            return htmlspecialchars($_GET[$key]);
         if (array_key_exists($key, $_POST))
-            return $_POST[$key];
+            return htmlspecialchars($_POST[$key]);
         return null;
     }
 }

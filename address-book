@@ -1,0 +1,66 @@
+#!/usr/bin/php
+<?php
+
+require_once __DIR__ . '/src/autoload.php';
+
+use CodingChallenge\JsonlDatabase;
+use CodingChallenge\Models\Contact;
+
+$db = new JsonlDatabase("contacts");
+
+// Parse the very first argument as action
+$options = getopt("a:", ['action:']);
+if (array_key_exists('a', $options)) {
+    $action = $options['a'];
+} elseif (array_key_exists('action', $options)) {
+    $action = $options['action'];
+} else {
+    // Print Help Text from README.md
+    echo rtrim(explode('```shell', file_get_contents('README.md'))[1], '```');
+    exit(0);
+}
+
+// Show a single Contact
+if ($action === 'show') {
+    $options = getopt('a:', ['action:', 'id:']);
+    $id = intval($options['id']);
+    $contact = new Contact($db->readObject($id));
+    print_r($contact->toArray());
+}
+
+// TODO: Store a new Contact
+elseif ($action === 'store') {
+    $contact = [];
+//    foreach ((new Contact())->getFields() as $fieldKey => $field)
+//        $contact[$fieldKey] = $request->input($fieldKey);
+    $db->appendObject($contact);
+    header('Location: /');
+}
+
+// TODO: Update a Contact
+elseif ($action === 'update') {
+    $options = getopt('a:', ['action:', 'id:']);
+    $id = intval($options['id']);
+    $contact = [];
+//    foreach ((new Contact())->getFields() as $fieldKey => $field)
+//        $contact[$fieldKey] = $request->input($fieldKey);
+    $db->updateObject($id, $contact);
+    header('Location: /');
+}
+
+// Delete a Contact
+elseif ($action === 'delete') {
+    $options = getopt('a:', ['action:', 'id:']);
+    $id = intval($options['id']);
+    $db->deleteObject($id);
+    header('Location: /');
+}
+
+// Show listing of all Contacts
+else {
+    $options = getopt('a:', ['action:', 'sort-by:', 'sort-direction:']);
+    $sortBy = $options['sort-by'] ?? 'index';
+    $sortDirection = $options['sort-direction'] ?? 'asc';
+    foreach ($db->readObjects($sortBy, $sortDirection) as $contact)
+        echo implode(' | ', (new Contact($contact))->toArray()).PHP_EOL;
+}

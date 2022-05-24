@@ -5,7 +5,7 @@ use CodingChallenge\Models\Contact;
 ?>
 
 <form action="?action=store" method="POST">
-    <table class="full-width" style="max-width: 500px">
+    <table class="full-width" style="max-width: 500px; margin: 0 auto">
 
         <tbody>
         <?php foreach ((new Contact())->getFields() as $fieldKey => $field): ?>
