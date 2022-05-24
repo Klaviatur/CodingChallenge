@@ -18,10 +18,10 @@ Clone this repo.
 `bash bin/tests.sh`
 
 ## Features
-- No SQL / Simple database engine based on [jsonlines](https://jsonlines.org/)
-- Extensible model fields: Adding new fields in `./src/Models/Contact.php` is done easily. Doing this does not conflict with existing data.
+- No SQL / Simple database engine based on [jsonlines](https://jsonlines.org/).
+- Add new model fields in `./src/Models/Contact.php` easily. This does not conflict with existing data.
 - Models could carry even more attributes for e.g. other input fields than *type="text"*.
-- There is a CLI
+- There is a CLI.
 
 ## Limitations
 - Since there is no lock for limiting parallel access on our database file, only ONE user should use this application. `a user can [...]` :)
